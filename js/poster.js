@@ -24,11 +24,11 @@
   var NUM = '"PlushNum", "PlushDisplay", "PingFang SC", sans-serif';
   var BODY = '-apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif';
 
-  // Every poster leads to the gallery page; a personal one also points at the visitor's own avatar there.
-  function shareUrl(me) {
+  // Every poster, from any page, leads to the event details page.
+  function shareUrl() {
     var link = document.querySelector('link[rel="canonical"]');
     var base = link && link.href ? link.href : location.href.split('#')[0].split('?')[0];
-    return new URL('wall.html', base).href + (me ? '?u=' + me.id : '');
+    return new URL('./', base).href;
   }
 
   function currentMe() {
@@ -659,9 +659,9 @@
     drawQR(ctx, assets.url, tileX + 12, tileY + 12, tile - 24, assets.logo);
 
     rich(ctx, [{ t: '长按识别二维码', font: '400 36px ' + DISPLAY }], bx + 34, qy + 78, 'left');
-    var invite = assets.me
-      ? (assets.total > 1 ? '已有 ' + assets.total + ' 位开发者入列，等你来' : '进集合页，领取你的毛毡分身')
-      : '进集合页，生成你的毛毡形象';
+    var invite = assets.me && assets.total > 1
+      ? '已有 ' + assets.total + ' 位开发者入列，等你来'
+      : '查看活动详情 · 立即报名';
     rich(ctx, [{ t: invite, font: '700 23px ' + BODY, color: C.berry }], bx + 34, qy + 122, 'left');
     rich(ctx, [{ t: '主办：圆方智谷×卫华集团', font: '500 19px ' + BODY, color: C.ink2 }], bx + 34, qy + 162, 'left');
 
@@ -736,13 +736,13 @@
       if (!withMe && !crane) {
         // the avatar went missing (removed from the gallery): fall back to the generic poster
         return loadImage('assets/img/hero-crane.webp').then(function (im) {
-          return drawPoster({ crane: im, logo: r[2], url: shareUrl(null) });
+          return drawPoster({ crane: im, logo: r[2], url: shareUrl() });
         });
       }
       return drawPoster({
         crane: crane,
         logo: r[2],
-        url: shareUrl(withMe ? me : null),
+        url: shareUrl(),
         me: withMe ? { img: r[4], nickname: me.nickname, no: me.no } : null,
         total: r[5]
       });
