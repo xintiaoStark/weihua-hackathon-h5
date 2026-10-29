@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#a0d8fb">
+  <title>开发者召集令 · AI入企黑客松 卫华集团专场</title>
+  <meta name="description" content="在全国第一的起重机制造企业，用两天一夜，把AI写进真实工业场景。2026年11月9日—10日，河南长垣，总奖金超6万元，包吃包住，每人报销路费200元。">
+  <meta property="og:title" content="开发者召集令 · AI入企黑客松 卫华集团专场">
+  <meta property="og:description" content="两天一夜，把AI写进真实工业场景。总奖金超6万，包吃包住，路费报销。">
+  <meta property="og:image" content="assets/img/hero-crane.webp">
+  <link rel="icon" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/favicon.png">
+  <link rel="preload" href="assets/fonts/display.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/img/hero-crane.webp" as="image">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <filter id="fuzz" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="fuzz-soft" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="2" seed="3" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="fuzz-text" x="-4%" y="-4%" width="108%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="11" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+  <div class="backdrop" aria-hidden="true">
+    <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  </div>
+
+  <aside class="desk-qr" aria-label="手机扫码报名">
+    <div class="plush tone-cream desk-qr-card">
+      <i class="seam"></i>
+      <p class="desk-qr-title d">手机扫码报名</p>
+      <img src="assets/img/signup-qr.png" alt="卫华集团黑客松大赛报名二维码" width="180" height="180">
+      <a class="btn btn-primary btn-sm" href="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" target="_blank" rel="noopener" data-signup>电脑端报名</a>
+    </div>
+  </aside>
+
+  <main class="page">
+    <!-- 主视觉 -->
+    <header class="hero" id="top">
+      <div class="hero-top">
+        <span class="pill pill-white"><i class="dot"></i>圆方智谷 × 卫华集团</span>
+        <span class="pill pill-lemon" id="countdown" hidden></span>
+      </div>
+
+      <div class="hero-copy">
+        <p class="hero-kicker d">AI入企黑客松 · 卫华集团专场</p>
+        <h1 class="hero-title d" aria-label="开发者召集令">
+          <span class="t1">开发者</span>
+          <span class="t2">召集令</span>
+        </h1>
+        <p class="hero-sub">在<b>全国第一</b>的起重机制造企业，<br>用两天一夜，把AI写进真实工业场景。</p>
+      </div>
+
+      <div class="hero-stage">
+        <img class="hero-crane" src="assets/img/hero-crane.webp" width="900" height="1200" alt="抱着笔记本电脑的毛绒起重机吉祥物">
+        <div class="sticker s-prize" data-boing>
+          <small>总奖金超</small><b class="n">¥6万</b>
+        </div>
+        <div class="sticker s-stay" data-boing>包吃<br>包住</div>
+        <div class="sticker s-ticket" data-boing><small>路费报销</small><b class="n">¥200</b></div>
+      </div>
+
+      <div class="hero-facts">
+        <div class="fact"><b class="n">11.9—11.10</b><span>两天一夜 · 拟定</span></div>
+        <div class="fact"><b class="d">河南 · 长垣</b><span>山海大道18号</span></div>
+      </div>
+
+      <div class="hero-cta" id="heroCta">
+        <a class="btn btn-primary btn-lg" href="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" target="_blank" rel="noopener" data-signup>
+          <span>立即报名</span><i class="arrow" aria-hidden="true"></i>
+        </a>
+        <a class="btn btn-soft" href="#info">先看看玩法</a>
+      </div>
+
+      <svg class="hero-cloud" viewBox="0 0 480 60" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 60 V34 C30 14 58 14 84 30 C104 8 146 6 168 28 C192 4 236 4 258 30 C280 10 320 8 342 30 C366 8 412 10 432 32 C450 20 468 22 480 30 V60 Z"/>
+      </svg>
+    </header>
+
+    <!-- 01 活动信息 -->
+    <section class="sec" id="info">
+      <div class="sec-head reveal">
+        <span class="sec-no n">01</span>
+        <h2 class="d">活动信息</h2>
+        <span class="sec-en">EVENT INFO</span>
+      </div>
+
+      <ul class="info-list">
+        <li class="plush info-item tone-sky reveal">
+          <span class="tile"><img src="assets/img/ic-calendar.webp" alt="" width="160" height="160"></span>
+          <div class="info-body">
+            <h3 class="d">时间</h3>
+            <p>拟定 <b>2026年11月9日—10日</b><br>两天一夜</p>
+          </div>
+        </li>
+        <li class="plush info-item tone-lemon reveal">
+          <span class="tile"><img src="assets/img/ic-pin.webp" alt="" width="160" height="160"></span>
+          <div class="info-body">
+            <h3 class="d">地点</h3>
+            <p>河南省新乡市长垣市<br><b>山海大道18号</b></p>
+            <div class="info-actions">
+              <button class="chip-btn" type="button" data-copy="河南省新乡市长垣市山海大道18号" data-toast="地址已复制">复制地址</button>
+              <a class="chip-btn" href="https://uri.amap.com/search?keyword=%E6%B2%B3%E5%8D%97%E7%9C%81%E6%96%B0%E4%B9%A1%E5%B8%82%E9%95%BF%E5%9E%A3%E5%B8%82%E5%B1%B1%E6%B5%B7%E5%A4%A7%E9%81%9318%E5%8F%B7" target="_blank" rel="noopener">地图导航</a>
+            </div>
+          </div>
+        </li>
+        <li class="plush info-item tone-peach reveal">
+          <span class="tile"><img src="assets/img/ic-food.webp" alt="" width="160" height="160"></span>
+          <div class="info-body">
+            <h3 class="d">食宿</h3>
+            <p><b>包吃包住</b>，全程提供餐饮与住宿</p>
+          </div>
+        </li>
+        <li class="plush info-item tone-mint reveal">
+          <span class="tile"><img src="assets/img/ic-ticket.webp" alt="" width="160" height="160"></span>
+          <div class="info-body">
+            <h3 class="d">路费</h3>
+            <p>每人报销路费 <b class="n">¥200</b></p>
+          </div>
+        </li>
+        <li class="plush info-item tone-lilac reveal">
+          <span class="tile"><img src="assets/img/ic-puzzle.webp" alt="" width="160" height="160"></span>
+          <div class="info-body">
+            <h3 class="d">形式</h3>
+            <p>与卫华员工<b>混编组队</b>，围绕真实业务赛题现场开发、路演</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 02 命题企业 -->
+    <section class="sec" id="company">
+      <div class="sec-head reveal">
+        <span class="sec-no n">02</span>
+        <h2 class="d">命题企业</h2>
+        <span class="sec-en">THE CHALLENGER</span>
+      </div>
+
+      <div class="plush company-card tone-peach reveal">
+        <i class="seam"></i>
+        <div class="company-top">
+          <span class="tile tile-lg"><img src="assets/img/ic-factory.webp" alt="" width="160" height="160"></span>
+          <div>
+            <h3 class="d">卫华集团</h3>
+            <p class="company-tag">中国起重装备行业的绝对龙头</p>
+          </div>
+        </div>
+        <p class="company-lead">这一次，我们走进一家真正参与国家级工程的制造企业。始建于1988年，从三亩地起步，深耕装备制造三十余年。</p>
+      </div>
+
+      <div class="stats">
+        <div class="plush stat tone-sky reveal"><b class="n">No.1</b><span>全国第一的工业起重机制造企业</span></div>
+        <div class="plush stat tone-pink reveal"><b class="n">20<em>年</em></b><span>桥门式起重机产销量连续全国第一</span></div>
+        <div class="plush stat tone-lemon reveal"><b class="n"><em>近</em>300<em>亿</em></b><span>年营业收入</span></div>
+        <div class="plush stat tone-mint reveal"><b class="n">10000+</b><span>员工</span></div>
+        <div class="plush stat tone-lilac reveal"><b class="n">1800+</b><span>授权专利</span></div>
+        <div class="plush stat tone-peach reveal"><b class="n">170+</b><span>产品出口国家和地区</span></div>
+      </div>
+
+      <ul class="honors reveal">
+        <li>制造业单项冠军示范企业</li>
+        <li>国家技术创新示范企业</li>
+        <li>国家认定企业技术中心</li>
+        <li>国家级绿色工厂</li>
+      </ul>
+
+      <div class="plush mega tone-lemon reveal">
+        <i class="seam"></i>
+        <p class="mega-label d">大国重器</p>
+        <p class="mega-main">自主研制 <b class="n">3800</b><b class="d">吨</b><br>超大型门式起重机</p>
+        <p class="mega-sub">产品服务于国家工程</p>
+        <div class="marquee" aria-label="中国核电、北京奥运场馆、南水北调、杭州湾跨海大桥">
+          <div class="marquee-track">
+            <span>中国核电</span><span>北京奥运场馆</span><span>南水北调</span><span>杭州湾跨海大桥</span>
+            <span aria-hidden="true">中国核电</span><span aria-hidden="true">北京奥运场馆</span><span aria-hidden="true">南水北调</span><span aria-hidden="true">杭州湾跨海大桥</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 赛道方向 -->
+    <section class="sec" id="tracks">
+      <div class="sec-head reveal">
+        <span class="sec-no n">03</span>
+        <h2 class="d">赛道方向</h2>
+        <span class="sec-en">TRACKS</span>
+      </div>
+
+      <div class="plush notice tone-cream reveal">
+        <span class="tile tile-sm"><img src="assets/img/ic-bulb.webp" alt="" width="160" height="160"></span>
+        <p>围绕企业<b>真实业务</b>，具体命题稍后发布</p>
+      </div>
+
+      <ol class="tracks">
+        <li class="plush track tone-peach reveal">
+          <span class="tile"><img src="assets/img/ic-track-make.webp" alt="" width="160" height="160"></span>
+          <div><h3 class="d">生产制造</h3><p>生产、工艺、质量、设备等方向</p></div>
+          <span class="track-no n">01</span>
+        </li>
+        <li class="plush track tone-pink reveal">
+          <span class="tile"><img src="assets/img/ic-track-market.webp" alt="" width="160" height="160"></span>
+          <div><h3 class="d">营销获客</h3><p>销售、报价、投标、客户经营等方向</p></div>
+          <span class="track-no n">02</span>
+        </li>
+        <li class="plush track tone-mint reveal">
+          <span class="tile"><img src="assets/img/ic-track-hr.webp" alt="" width="160" height="160"></span>
+          <div><h3 class="d">人力行政</h3><p>招聘、人事、行政办公等方向</p></div>
+          <span class="track-no n">03</span>
+        </li>
+        <li class="plush track tone-sky reveal">
+          <span class="tile"><img src="assets/img/ic-track-service.webp" alt="" width="160" height="160"></span>
+          <div><h3 class="d">售后办公</h3><p>售后、客服、日常办公协同等方向</p></div>
+          <span class="track-no n">04</span>
+        </li>
+        <li class="plush track tone-lilac reveal">
+          <span class="tile"><img src="assets/img/ic-track-content.webp" alt="" width="160" height="160"></span>
+          <div><h3 class="d">内容创作</h3><p>文案、设计素材、视频、培训材料等方向</p></div>
+          <span class="track-no n">05</span>
+        </li>
+      </ol>
+    </section>
+
+    <!-- 04 两天一夜怎么玩 -->
+    <section class="sec" id="flow">
+      <div class="sec-head reveal">
+        <span class="sec-no n">04</span>
+        <h2 class="d">两天一夜怎么玩</h2>
+        <span class="sec-en">HOW IT WORKS</span>
+      </div>
+
+      <figure class="plush team-card reveal">
+        <img src="assets/img/team.webp" width="960" height="720" alt="三只毛绒小伙伴击掌组队：开发者、工程师和学生">
+        <figcaption><span class="d">外部开发者 × 卫华员工</span>组成实战小队</figcaption>
+      </figure>
+
+      <ol class="steps">
+        <li class="step reveal">
+          <span class="tile tone-peach-bg"><img src="assets/img/ic-puzzle.webp" alt="" width="160" height="160"></span>
+          <div class="plush step-card tone-white">
+            <span class="step-no n">STEP 1</span>
+            <h3 class="d">混编组队</h3>
+            <p>外部开发者与卫华员工混编，组成实战小队</p>
+          </div>
+        </li>
+        <li class="step reveal">
+          <span class="tile tone-sky-bg"><img src="assets/img/ic-laptop.webp" alt="" width="160" height="160"></span>
+          <div class="plush step-card tone-white">
+            <span class="step-no n">STEP 2</span>
+            <h3 class="d">现场开发</h3>
+            <p>两天一夜，围绕真实赛题动手共创</p>
+          </div>
+        </li>
+        <li class="step reveal">
+          <span class="tile tone-pink-bg"><img src="assets/img/ic-mic.webp" alt="" width="160" height="160"></span>
+          <div class="plush step-card tone-white">
+            <span class="step-no n">STEP 3</span>
+            <h3 class="d">路演</h3>
+            <p>各队呈现作品，现场讲解与答辩</p>
+          </div>
+        </li>
+        <li class="step reveal">
+          <span class="tile tone-lemon-bg"><img src="assets/img/ic-medal.webp" alt="" width="160" height="160"></span>
+          <div class="plush step-card tone-white">
+            <span class="step-no n">STEP 4</span>
+            <h3 class="d">评审颁奖</h3>
+            <p>评委打分，现场公布结果并颁奖</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- 05 赛制与奖金 -->
+    <section class="sec" id="prize">
+      <div class="sec-head reveal">
+        <span class="sec-no n">05</span>
+        <h2 class="d">赛制与奖金</h2>
+        <span class="sec-en">AWARDS</span>
+      </div>
+
+      <div class="plush prize-card reveal">
+        <i class="seam"></i>
+        <div class="prize-hero">
+          <img class="prize-trophy" src="assets/img/trophy.webp" width="760" height="760" alt="开心的毛绒奖杯和金币">
+          <div class="prize-total">
+            <span class="d">总奖金超</span>
+            <b class="n">¥60,000</b>
+          </div>
+        </div>
+
+        <div class="podium" role="list">
+          <div class="podium-col p2" role="listitem">
+            <p class="podium-prize"><small>各</small><b class="n">¥5,000</b></p>
+            <div class="plush block"><span class="d">二等奖</span><em>2名</em></div>
+          </div>
+          <div class="podium-col p1" role="listitem">
+            <p class="podium-prize"><b class="n">¥10,000</b></p>
+            <div class="plush block"><span class="d">一等奖</span><em>1名</em></div>
+          </div>
+          <div class="podium-col p3" role="listitem">
+            <p class="podium-prize"><small>各</small><b class="n">¥2,000</b></p>
+            <div class="plush block"><span class="d">三等奖</span><em>5名</em></div>
+          </div>
+        </div>
+
+        <ul class="prize-rows">
+          <li class="plush prize-row tone-white">
+            <span class="tile tile-sm"><img src="assets/img/ic-coins.webp" alt="" width="160" height="160"></span>
+            <div><h3 class="d">入围奖</h3><p><b>不限名额</b>，每个 <b class="n">¥1,000</b></p></div>
+          </li>
+          <li class="plush prize-row tone-white">
+            <span class="tile tile-sm"><img src="assets/img/ic-egg.webp" alt="" width="160" height="160"></span>
+            <div><h3 class="d">大奖彩蛋</h3><p>更多大奖彩蛋待解锁，后续公布</p></div>
+          </li>
+        </ul>
+
+        <div class="coop">
+          <img src="assets/img/ic-handshake.webp" alt="" width="160" height="160">
+          <p>优秀案例可直接与<b>卫华集团</b>谈合作，获得真实项目落地与长期合作机会</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 你能得到什么 -->
+    <section class="sec" id="gain">
+      <div class="sec-head reveal">
+        <span class="sec-no n">06</span>
+        <h2 class="d">你能得到什么</h2>
+        <span class="sec-en">WHAT YOU GET</span>
+      </div>
+
+      <div class="gains">
+        <div class="plush gain tone-sky reveal">
+          <span class="tile"><img src="assets/img/ic-factory.webp" alt="" width="160" height="160"></span>
+          <h3 class="d">真实场景</h3><p>不是练习题，而是企业一线的真实业务问题</p>
+        </div>
+        <div class="plush gain tone-lemon reveal">
+          <span class="tile"><img src="assets/img/ic-coins.webp" alt="" width="160" height="160"></span>
+          <h3 class="d">丰厚奖金</h3><p>总奖金超6万元，入围奖不限名额，更有彩蛋大奖待解锁</p>
+        </div>
+        <div class="plush gain tone-peach reveal">
+          <span class="tile"><img src="assets/img/ic-food.webp" alt="" width="160" height="160"></span>
+          <h3 class="d">包吃包住</h3><p>两天一夜，让你专注创作</p>
+        </div>
+        <div class="plush gain tone-mint reveal">
+          <span class="tile"><img src="assets/img/ic-ticket.webp" alt="" width="160" height="160"></span>
+          <h3 class="d">路费报销</h3><p>每人报销路费 200 元</p>
+        </div>
+        <div class="plush gain tone-pink reveal">
+          <span class="tile"><img src="assets/img/ic-handshake.webp" alt="" width="160" height="160"></span>
+          <h3 class="d">合作机会</h3><p>优秀作品可直接与企业谈合作、推动项目落地</p>
+        </div>
+        <div class="plush gain tone-lilac reveal">
+          <span class="tile"><img src="assets/img/ic-scroll.webp" alt="" width="160" height="160"></span>
+          <h3 class="d">履历背书</h3><p>参与全国第一制造企业的AI实战共创</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 我们在找这样的你 -->
+    <section class="sec" id="who">
+      <div class="sec-head reveal">
+        <span class="sec-no n">07</span>
+        <h2 class="d">我们在找这样的你</h2>
+        <span class="sec-en">WHO WE NEED</span>
+      </div>
+
+      <div class="roles">
+        <div class="plush role tone-pink reveal">
+          <span class="tile tile-lg"><img src="assets/img/ic-rocket.webp" alt="" width="160" height="160"></span>
+          <div><h3 class="d">FDE 前线部署工程师</h3><p>有AI应用落地经验，能独立完成场景对接与部署</p></div>
+        </div>
+        <div class="plush role tone-mint reveal">
+          <span class="tile tile-lg"><img src="assets/img/ic-robot.webp" alt="" width="160" height="160"></span>
+          <div><h3 class="d"><span class="nw">AI开发者 /</span> <span class="nw">独立开发者 /</span> <span class="nw">技术团队</span></h3><p>能围绕真实业务，做出解决实际问题的AI应用</p></div>
+        </div>
+        <div class="plush role tone-lilac reveal">
+          <span class="tile tile-lg"><img src="assets/img/ic-student.webp" alt="" width="160" height="160"></span>
+          <div><h3 class="d">高校学生</h3><p>个人或组队均可，欢迎有想法、敢动手的同学</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 08 报名方式 -->
+    <section class="sec sec-signup" id="signup">
+      <div class="sec-head reveal">
+        <span class="sec-no n">08</span>
+        <h2 class="d">报名方式</h2>
+        <span class="sec-en">SIGN UP</span>
+      </div>
+
+      <div class="plush signup-card reveal">
+        <i class="seam"></i>
+        <img class="signup-gift" src="assets/img/ic-gift.webp" alt="" width="160" height="160">
+        <p class="signup-title d">报名通道已开启</p>
+        <p class="signup-sub">点击按钮直接填写报名表，或长按识别二维码</p>
+        <div class="qr-frame">
+          <img src="assets/img/signup-qr.png" width="300" height="300" alt="卫华集团黑客松大赛报名二维码，长按识别">
+        </div>
+        <a class="btn btn-primary btn-lg btn-block" href="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" target="_blank" rel="noopener" data-signup>
+          <span>立即报名</span><i class="arrow" aria-hidden="true"></i>
+        </a>
+        <button class="btn btn-soft btn-block" type="button" data-copy="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" data-toast="报名链接已复制，可粘贴到浏览器打开">复制报名链接</button>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <p class="foot-host">主办：<b>圆方智谷 · 卫华集团</b></p>
+      <p class="foot-slogan d">让每一个真实业务场景，都有AI的答案</p>
+      <p class="foot-note">企业服务AI社区 · 活动时间为拟定，最终安排以主办方通知为准</p>
+    </footer>
+  </main>
+
+  <div class="dock" id="dock" aria-hidden="true">
+    <div class="dock-inner">
+      <div class="dock-text">
+        <b class="d">总奖金超 ¥6万</b>
+        <span>包吃包住 · 路费报销</span>
+      </div>
+      <a class="btn btn-primary" href="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" target="_blank" rel="noopener" tabindex="-1" data-signup>
+        <span>立即报名</span><i class="arrow" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>
