@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#a0d8fb">
+  <title>毛毡开发者集合页 · AI入企黑客松 卫华集团专场</title>
+  <meta name="description" content="上传照片生成你的毛毡分身，加入开发者召集令。2026年11月9日—10日，河南长垣，总奖金超6万元，包吃包住，每人报销路费200元。">
+  <meta property="og:title" content="毛毡开发者集合页 · AI入企黑客松 卫华集团专场">
+  <meta property="og:description" content="生成你的毛毡分身，加入开发者召集令。总奖金超6万，包吃包住，路费报销。">
+  <meta property="og:image" content="assets/img/hero-crane.webp">
+  <meta property="og:url" content="https://wechat.tokenmap.com.cn/1030/wall.html">
+  <link rel="canonical" href="https://wechat.tokenmap.com.cn/1030/wall.html">
+  <link rel="icon" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/favicon.png">
+  <link rel="preload" href="assets/fonts/display.woff2?v=20261030-2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css?v=20261030-2">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <svg class="defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <filter id="fuzz" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="7" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="fuzz-soft" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="2" seed="3" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="fuzz-text" x="-4%" y="-4%" width="108%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="11" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+  <div class="backdrop" aria-hidden="true">
+    <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+  </div>
+
+  <aside class="desk-qr" aria-label="手机扫码报名">
+    <div class="plush tone-cream desk-qr-card">
+      <i class="seam"></i>
+      <p class="desk-qr-title d">手机扫码报名</p>
+      <img src="assets/img/signup-qr.png" alt="卫华集团黑客松大赛报名二维码" width="180" height="180">
+      <a class="btn btn-primary btn-sm btn-block" href="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" target="_blank" rel="noopener" data-signup>电脑端报名</a>
+      <button class="btn btn-soft btn-sm btn-block" type="button" data-poster><i class="ico-poster" aria-hidden="true"></i>生成分享海报</button>
+    </div>
+  </aside>
+
+  <main class="page">
+    <header class="hero wall-hero" id="top">
+      <div class="hero-top">
+        <a class="pill pill-white" href="index.html"><i class="dot"></i>圆方智谷×卫华集团</a>
+        <span class="pill pill-lemon" id="wallCountPill" hidden>已入列 <b id="wallCount">0</b> 人</span>
+      </div>
+
+      <div class="hero-copy">
+        <p class="hero-kicker d">AI入企黑客松 · 卫华集团专场</p>
+        <h1 class="hero-title wall-title d" aria-label="毛毡开发者集合中">
+          <span class="t1">毛毡开发者</span>
+          <span class="t2">集合中</span>
+        </h1>
+        <p class="hero-sub">每一只毛毡小人，都是一位<b>响应召集令</b>的开发者。<br>11月9日—10日，河南长垣见！</p>
+      </div>
+
+      <div class="plush wall-stage" id="wallStage">
+        <i class="seam"></i>
+        <div class="wall-parade" id="wallParade"></div>
+        <p class="wall-ribbon" id="wallRibbon" hidden></p>
+        <div class="wall-stage-empty" id="wallStageEmpty">
+          <img src="assets/img/hero-crane.webp" width="900" height="1200" alt="">
+          <p class="d">第一只毛毡小人，等你来做</p>
+        </div>
+      </div>
+
+      <div class="hero-cta" id="heroCta">
+        <a class="btn btn-primary btn-lg" href="index.html#felt" id="wallMake">
+          <span>生成我的毛毡形象</span><i class="arrow" aria-hidden="true"></i>
+        </a>
+        <button class="btn btn-primary btn-lg" type="button" id="wallMyPoster" data-poster hidden>
+          <i class="ico-poster ico-poster-w" aria-hidden="true"></i><span>生成我的专属海报</span>
+        </button>
+        <div class="cta-row">
+          <a class="btn btn-soft" href="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" target="_blank" rel="noopener" data-signup>立即报名</a>
+          <a class="btn btn-soft" href="index.html">活动详情</a>
+        </div>
+      </div>
+
+      <svg class="hero-cloud" viewBox="0 0 480 60" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 60 V34 C30 14 58 14 84 30 C104 8 146 6 168 28 C192 4 236 4 258 30 C280 10 320 8 342 30 C366 8 412 10 432 32 C450 20 468 22 480 30 V60 Z"/>
+      </svg>
+    </header>
+
+    <section class="sec" id="crowd">
+      <div class="sec-head">
+        <span class="sec-no n">01</span>
+        <h2 class="d">毛毡开发者们</h2>
+        <span class="sec-en">THE FELT CREW</span>
+      </div>
+
+      <div class="plush notice tone-cream wall-facts">
+        <span class="tile tile-sm"><img src="assets/img/ic-calendar.webp" alt="" width="160" height="160"></span>
+        <p><b>11.9—11.10</b> 河南长垣 · 总奖金超 <b>¥6万</b> · 包吃包住 · 路费报销 <b>¥200</b></p>
+      </div>
+
+      <div class="wall-grid" id="wallGrid" aria-live="polite"></div>
+      <p class="wall-empty" id="wallEmpty" hidden>还没有人入列，快来做第一只毛毡小人！</p>
+      <p class="wall-empty" id="wallOffline" hidden>集合页暂时连不上，稍后刷新试试</p>
+      <button class="btn btn-soft btn-block wall-more" type="button" id="wallMore" hidden>加载更多</button>
+    </section>
+
+    <section class="sec sec-signup" id="signup">
+      <div class="sec-head reveal">
+        <span class="sec-no n">02</span>
+        <h2 class="d">报名方式</h2>
+        <span class="sec-en">SIGN UP</span>
+      </div>
+
+      <div class="plush signup-card reveal">
+        <i class="seam"></i>
+        <img class="signup-gift" src="assets/img/ic-gift.webp" alt="" width="160" height="160">
+        <p class="signup-title d">报名通道已开启</p>
+        <p class="signup-sub">点击按钮直接填写报名表，或长按识别二维码</p>
+        <div class="qr-frame">
+          <img src="assets/img/signup-qr.png" width="300" height="300" alt="卫华集团黑客松大赛报名二维码，长按识别">
+        </div>
+        <a class="btn btn-primary btn-lg btn-block" href="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" target="_blank" rel="noopener" data-signup>
+          <span>立即报名</span><i class="arrow" aria-hidden="true"></i>
+        </a>
+        <div class="cta-row">
+          <a class="btn btn-soft" href="index.html#felt">生成毛毡形象</a>
+          <button class="btn btn-soft" type="button" data-poster><i class="ico-poster" aria-hidden="true"></i>生成海报</button>
+        </div>
+        <p class="signup-share">邀请朋友一起来？生成海报，分享到朋友圈或群聊</p>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <p class="foot-host">主办：<b>圆方智谷×卫华集团</b></p>
+      <p class="foot-slogan d">让每一个真实业务场景，都有AI的答案</p>
+      <p class="foot-note">场景生态OPC社区 · 活动时间为拟定，最终安排以主办方通知为准</p>
+    </footer>
+  </main>
+
+  <div class="dock" id="dock" aria-hidden="true">
+    <div class="dock-inner">
+      <div class="dock-text">
+        <b class="d">总奖金超 ¥6万</b>
+        <span>包吃包住 · 路费报销</span>
+      </div>
+      <div class="dock-actions">
+        <button class="dock-poster" type="button" tabindex="-1" data-poster aria-label="生成分享海报">
+          <i class="ico-poster" aria-hidden="true"></i><span>海报</span>
+        </button>
+        <a class="btn btn-primary" href="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" target="_blank" rel="noopener" tabindex="-1" data-signup>
+          <span>立即报名</span><i class="arrow" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="peek" id="peek" role="dialog" aria-modal="true" aria-label="毛毡形象大图" hidden>
+    <div class="poster-mask" data-peek-close></div>
+    <figure class="peek-card">
+      <span class="felt-no n" id="peekNo"></span>
+      <img id="peekImg" alt="">
+      <figcaption class="d" id="peekName"></figcaption>
+    </figure>
+    <button class="poster-close" type="button" data-peek-close aria-label="关闭大图"></button>
+  </div>
+
+  <div class="poster-modal" id="posterModal" role="dialog" aria-modal="true" aria-label="分享海报" hidden>
+    <div class="poster-mask" data-poster-close></div>
+    <div class="poster-sheet">
+      <div class="poster-stage">
+        <div class="poster-loading" hidden>
+          <span class="poster-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <p class="d">海报生成中…</p>
+        </div>
+        <div class="poster-error" hidden>
+          <p>海报生成失败，请检查网络后重试</p>
+          <button class="btn btn-soft btn-sm" type="button" data-poster-retry>重新生成</button>
+        </div>
+        <img class="poster-img" alt="AI入企黑客松卫华集团专场分享海报，含集合页二维码" hidden>
+      </div>
+      <p class="poster-tip"></p>
+      <a class="poster-upsell" href="index.html#felt" data-poster-close hidden>上传照片，生成带你毛毡形象的专属海报</a>
+      <div class="poster-actions">
+        <a class="btn btn-primary" id="posterSave" href="#" download="卫华AI黑客松-分享海报.jpg">保存海报</a>
+        <button class="btn btn-soft" id="posterShare" type="button" hidden>分享给朋友</button>
+      </div>
+      <button class="poster-close" type="button" data-poster-close aria-label="关闭海报"></button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/main.js?v=20261030-2" defer></script>
+  <script src="js/wall.js?v=20261030-2" defer></script>
+  <script src="js/poster.js?v=20261030-2" defer></script>
+</body>
+</html>

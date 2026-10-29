@@ -1,7 +1,7 @@
 """Subset the display fonts to the characters the page actually uses.
 
-Re-run after editing copy in index.html or any file under js/ (the share
-poster draws its text from js/poster.js).
+Re-run after editing copy in any page (*.html) or any file under js/ (the
+share poster draws its text from js/poster.js).
 """
 from pathlib import Path
 
@@ -17,7 +17,7 @@ EXTRA = "¥—–·×、，。：；！？“”‘’（）《》【】01234567
 
 
 def page_text() -> str:
-    files = [ROOT / "index.html", *sorted((ROOT / "js").rglob("*.js"))]
+    files = [*sorted(ROOT.glob("*.html")), *sorted((ROOT / "js").rglob("*.js"))]
     return "".join(f.read_text(encoding="utf-8") for f in files)
 
 

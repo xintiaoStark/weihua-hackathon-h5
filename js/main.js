@@ -116,6 +116,37 @@
     });
   }
 
+  // The visitor's own felt avatar (id, no, nickname, url, thumb, key) is remembered on this phone;
+  // key lets the same phone replace or remove it later.
+  var ME_KEY = 'wh1030_felt_me';
+  window.Plush = {
+    toast: toast,
+    me: function () {
+      try { return JSON.parse(localStorage.getItem(ME_KEY) || 'null'); } catch (e) { return null; }
+    },
+    setMe: function (item) {
+      try {
+        if (item) localStorage.setItem(ME_KEY, JSON.stringify(item));
+        else localStorage.removeItem(ME_KEY);
+      } catch (e) {}
+      var ev;
+      try { ev = new Event('plush:me'); } catch (e) { ev = document.createEvent('Event'); ev.initEvent('plush:me', false, false); }
+      document.dispatchEvent(ev);
+    },
+    json: function (url, opt) {
+      return fetch(url, opt).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (j) {
+          if (!r.ok) {
+            var err = new Error(j.error || '网络开小差了，稍后再试');
+            err.status = r.status;
+            throw err;
+          }
+          return j;
+        });
+      });
+    }
+  };
+
   countdown();
   reveal();
   dock();

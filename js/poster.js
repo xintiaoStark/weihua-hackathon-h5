@@ -24,10 +24,26 @@
   var NUM = '"PlushNum", "PlushDisplay", "PingFang SC", sans-serif';
   var BODY = '-apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif';
 
-  function shareUrl() {
+  // Every poster leads to the gallery page; a personal one also points at the visitor's own avatar there.
+  function shareUrl(me) {
     var link = document.querySelector('link[rel="canonical"]');
-    if (link && link.href) return link.href;
-    return location.href.split('#')[0].split('?')[0];
+    var base = link && link.href ? link.href : location.href.split('#')[0].split('?')[0];
+    return new URL('wall.html', base).href + (me ? '?u=' + me.id : '');
+  }
+
+  function currentMe() {
+    return window.Plush ? window.Plush.me() : null;
+  }
+
+  function wallTotal() {
+    if (!window.fetch) return Promise.resolve(0);
+    var timeout = new Promise(function (resolve) { setTimeout(function () { resolve(0); }, 2500); });
+    var req = fetch('api/config').then(function (r) { return r.json(); }).then(function (j) { return +j.total || 0; }, function () { return 0; });
+    return Promise.race([req, timeout]);
+  }
+
+  function pad3(n) {
+    return ('00' + n).slice(-3);
   }
 
   // Deterministic randomness keeps the fuzz identical every time the poster is drawn.
@@ -402,6 +418,63 @@
 
   /* ---------- poster ---------- */
 
+  // The visitor's felt avatar on a cream plush card. The avatar has a white ground, so multiply
+  // drops it onto the card the same way the page's icons sit on their tiles.
+  function drawMe(ctx, me, rand) {
+    var x = 170;
+    var y = 424;
+    var w = 410;
+    var h = 424;
+    plushRect(ctx, x, y, w, h, 46, '#fffaf4', rand, { seam: 'rgba(242,102,139,.3)', shadow: 'rgba(40,90,160,.4)', blur: 34, offset: 18 });
+
+    var cx = x + w / 2;
+    var floor = y + h - 40;
+    ctx.save();
+    ctx.translate(cx, floor);
+    ctx.scale(1, 0.2);
+    var g = ctx.createRadialGradient(0, 0, 0, 0, 0, 140);
+    g.addColorStop(0, 'rgba(150,100,170,.24)');
+    g.addColorStop(1, 'rgba(150,100,170,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(-140, -140, 280, 280);
+    ctx.restore();
+
+    var im = me.img;
+    var s = Math.min((w - 60) / im.width, (h - 66) / im.height);
+    var dw = im.width * s;
+    var dh = im.height * s;
+    ctx.save();
+    roundRect(ctx, x + 10, y + 10, w - 20, h - 20, 36);
+    ctx.clip();
+    ctx.globalCompositeOperation = 'multiply';
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(im, cx - dw / 2, floor + 6 - dh, dw, dh);
+    ctx.restore();
+
+    ctx.save();
+    ctx.translate(x + 4, y + 10);
+    ctx.rotate(-0.08);
+    pill(ctx, -22, -24, 50, 'No.' + pad3(me.no), {
+      font: '900 26px ' + NUM,
+      bg: ['#ff9e8a', '#f2668b'],
+      color: '#ffffff',
+      pad: 20,
+      shadow: 'rgba(200,60,100,.45)'
+    }, rand);
+    ctx.restore();
+  }
+
+  // drawn after the cloud edge, which would otherwise cover it
+  function drawMeName(ctx, me, rand) {
+    pill(ctx, W / 2, 822, 52, me.nickname, {
+      font: '700 25px ' + BODY,
+      bg: '#ffffff',
+      align: 'center',
+      pad: 26,
+      shadow: 'rgba(90,60,150,.32)'
+    }, rand);
+  }
+
   function drawPoster(assets) {
     var canvas = document.createElement('canvas');
     canvas.width = W * SCALE;
@@ -428,8 +501,8 @@
     blobs(ctx, [[652, 400, 26], [698, 378, 38], [744, 404, 30]], '#ffffff', rand);
     ctx.globalAlpha = 1;
 
-    pill(ctx, 36, 38, 50, '圆方智谷 × 卫华集团', { font: '600 22px ' + BODY, bg: 'rgba(255,255,255,.92)', dot: true }, rand);
-    pill(ctx, W - 36, 38, 50, '企业服务AI社区', { font: '600 22px ' + BODY, bg: '#fff1a8', align: 'right' }, rand);
+    pill(ctx, 36, 38, 50, '圆方智谷×卫华集团', { font: '600 22px ' + BODY, bg: 'rgba(255,255,255,.92)', dot: true }, rand);
+    pill(ctx, W - 36, 38, 50, '场景生态OPC社区', { font: '600 22px ' + BODY, bg: '#fff1a8', align: 'right' }, rand);
 
     pill(ctx, W / 2, 118, 58, 'AI入企黑客松 · 卫华集团专场', {
       font: '400 29px ' + DISPLAY,
@@ -451,28 +524,37 @@
     puffWord(ctx, '召集令', tx + w1 + gap + w2 / 2, 304, 108, 2.5, '#ffe47a',
       ['#ffd36d', '#ffc562', '#ffb658', '#fca64f', '#f89746', '#f28a3e'], 'rgba(190,100,40,.32)');
 
-    rich(ctx, [
-      { t: '在', font: '500 26px ' + BODY },
-      { t: '全国第一', font: '700 26px ' + BODY, mark: '#ffe47a' },
-      { t: '的起重机制造企业，', font: '500 26px ' + BODY }
-    ], W / 2, 362, 'center');
-    rich(ctx, [{ t: '用两天一夜，把AI写进真实工业场景。', font: '500 26px ' + BODY }], W / 2, 402, 'center');
+    if (assets.me) {
+      rich(ctx, [
+        { t: assets.me.nickname, font: '700 27px ' + BODY, mark: '#ffe47a' },
+        { t: ' 已入列开发者召集令', font: '500 26px ' + BODY }
+      ], W / 2, 362, 'center');
+      rich(ctx, [{ t: '两天一夜，一起把AI写进真实工业场景。', font: '500 26px ' + BODY }], W / 2, 402, 'center');
+      drawMe(ctx, assets.me, rand);
+    } else {
+      rich(ctx, [
+        { t: '在', font: '500 26px ' + BODY },
+        { t: '全国第一', font: '700 26px ' + BODY, mark: '#ffe47a' },
+        { t: '的起重机制造企业，', font: '500 26px ' + BODY }
+      ], W / 2, 362, 'center');
+      rich(ctx, [{ t: '用两天一夜，把AI写进真实工业场景。', font: '500 26px ' + BODY }], W / 2, 402, 'center');
 
-    var crane = assets.crane;
-    var sx = 30;
-    var sy = 170;
-    var sw = 840;
-    var sh = 790;
-    var cw = 484;
-    var ch = (cw * sh) / sw;
-    var cx = (W - cw) / 2;
-    var cy = 420;
-    ctx.drawImage(crane, sx, sy, sw, sh, cx, cy, cw, ch);
-    var fade = ctx.createLinearGradient(0, cy, 0, cy + 54);
-    fade.addColorStop(0, 'rgba(160,216,251,1)');
-    fade.addColorStop(1, 'rgba(160,216,251,0)');
-    ctx.fillStyle = fade;
-    ctx.fillRect(cx - 2, cy - 1, cw + 4, 56);
+      var crane = assets.crane;
+      var sx = 30;
+      var sy = 170;
+      var sw = 840;
+      var sh = 790;
+      var cw = 484;
+      var ch = (cw * sh) / sw;
+      var cx = (W - cw) / 2;
+      var cy = 420;
+      ctx.drawImage(crane, sx, sy, sw, sh, cx, cy, cw, ch);
+      var fade = ctx.createLinearGradient(0, cy, 0, cy + 54);
+      fade.addColorStop(0, 'rgba(160,216,251,1)');
+      fade.addColorStop(1, 'rgba(160,216,251,0)');
+      ctx.fillStyle = fade;
+      ctx.fillRect(cx - 2, cy - 1, cw + 4, 56);
+    }
 
     sticker(ctx, 122, 560, 78, '#ffe27a', -10, [
       { t: '总奖金超', font: '700 19px ' + BODY, color: C.ink2, lh: 28 },
@@ -495,6 +577,7 @@
     ctx.fillStyle = C.page;
     ctx.fillRect(0, 900, W, 14);
     blobs(ctx, bumps, C.page, rand, function (p) { return p[1] < 900; });
+    if (assets.me) drawMeName(ctx, assets.me, rand);
 
     var bx = 36;
     var by = 884;
@@ -576,8 +659,11 @@
     drawQR(ctx, assets.url, tileX + 12, tileY + 12, tile - 24, assets.logo);
 
     rich(ctx, [{ t: '长按识别二维码', font: '400 36px ' + DISPLAY }], bx + 34, qy + 78, 'left');
-    rich(ctx, [{ t: '查看活动详情 · 立即报名', font: '700 23px ' + BODY, color: C.berry }], bx + 34, qy + 122, 'left');
-    rich(ctx, [{ t: '主办：圆方智谷 · 卫华集团', font: '500 19px ' + BODY, color: C.ink2 }], bx + 34, qy + 162, 'left');
+    var invite = assets.me
+      ? (assets.total > 1 ? '已有 ' + assets.total + ' 位开发者入列，等你来' : '进集合页，领取你的毛毡分身')
+      : '进集合页，生成你的毛毡形象';
+    rich(ctx, [{ t: invite, font: '700 23px ' + BODY, color: C.berry }], bx + 34, qy + 122, 'left');
+    rich(ctx, [{ t: '主办：圆方智谷×卫华集团', font: '500 19px ' + BODY, color: C.ink2 }], bx + 34, qy + 162, 'left');
 
     ctx.save();
     ctx.translate(tileX - 30, qy + qh / 2);
@@ -621,24 +707,55 @@
     ? '长按海报，保存到相册或发送给朋友'
     : isMobile ? '长按海报可保存，或点击下方按钮' : '点击下方按钮保存海报';
   if (isWeChat) saveBtn.hidden = true;
+  var upsell = modal.querySelector('.poster-upsell');
 
+  function posterKey(me) {
+    return me ? me.id + '|' + me.nickname : 'generic';
+  }
+
+  // cached / pending are keyed by the avatar, so making a new one redraws the poster
   function generate() {
-    if (cached) return Promise.resolve(cached);
-    if (pending) return pending;
-    pending = Promise.all([
+    var me = currentMe();
+    var key = posterKey(me);
+    if (cached && cached.key === key) return Promise.resolve(cached.url);
+    if (pending && pending.key === key) return pending.promise;
+    var avatar = me
+      ? loadImage(me.url).catch(function () { return null; })
+      : Promise.resolve(null);
+    var job = { key: key };
+    job.promise = Promise.all([
       loadScript(QR_LIB),
-      loadImage('assets/img/hero-crane.webp'),
+      me ? null : loadImage('assets/img/hero-crane.webp'),
       loadImage('assets/img/ic-factory.webp'),
-      fontsReady()
+      fontsReady(),
+      avatar,
+      me ? wallTotal() : 0
     ]).then(function (r) {
-      cached = drawPoster({ crane: r[1], logo: r[2], url: shareUrl() });
-      pending = null;
-      return cached;
+      var withMe = me && r[4];
+      var crane = r[1];
+      if (!withMe && !crane) {
+        // the avatar went missing (removed from the gallery): fall back to the generic poster
+        return loadImage('assets/img/hero-crane.webp').then(function (im) {
+          return drawPoster({ crane: im, logo: r[2], url: shareUrl(null) });
+        });
+      }
+      return drawPoster({
+        crane: crane,
+        logo: r[2],
+        url: shareUrl(withMe ? me : null),
+        me: withMe ? { img: r[4], nickname: me.nickname, no: me.no } : null,
+        total: r[5]
+      });
+    }).then(function (url) {
+      if (pending === job) pending = null;
+      cached = { key: key, url: url };
+      return url;
     }, function (err) {
-      pending = null;
+      if (pending === job) pending = null;
       throw err;
     });
-    return pending;
+    pending = job;
+    return job.promise;
   }
 
   function setState(state) {
@@ -675,7 +792,9 @@
     modal.hidden = false;
     document.documentElement.classList.add('poster-open');
     closeBtn.focus({ preventScroll: true });
-    setState(cached ? 'ready' : 'loading');
+    var me = currentMe();
+    if (upsell) upsell.hidden = !!me;
+    setState(cached && cached.key === posterKey(me) ? 'ready' : 'loading');
     // Let the loading state paint before the synchronous canvas work starts.
     setTimeout(function () {
       generate().then(show, function () { setState('error'); });

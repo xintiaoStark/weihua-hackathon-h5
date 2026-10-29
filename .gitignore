@@ -1,2 +1,6 @@
 tools/fonts/*.ttf
 __pycache__/
+# backend secrets and visitor data never go into the repo
+server/.env
+server/data/
+node_modules/

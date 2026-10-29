@@ -14,9 +14,9 @@
   <link rel="canonical" href="https://wechat.tokenmap.com.cn/1030/">
   <link rel="icon" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/favicon.png">
-  <link rel="preload" href="assets/fonts/display.woff2?v=20261030" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/display.woff2?v=20261030-2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/img/hero-crane.webp" as="image">
-  <link rel="stylesheet" href="css/style.css?v=20261030">
+  <link rel="stylesheet" href="css/style.css?v=20261030-2">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -53,7 +53,7 @@
     <!-- 主视觉 -->
     <header class="hero" id="top">
       <div class="hero-top">
-        <span class="pill pill-white"><i class="dot"></i>圆方智谷 × 卫华集团</span>
+        <span class="pill pill-white"><i class="dot"></i>圆方智谷×卫华集团</span>
         <span class="pill pill-lemon" id="countdown" hidden></span>
       </div>
 
@@ -86,7 +86,7 @@
         </a>
         <div class="cta-row">
           <a class="btn btn-soft" href="#info">先看看玩法</a>
-          <button class="btn btn-soft" type="button" data-poster><i class="ico-poster" aria-hidden="true"></i>分享海报</button>
+          <a class="btn btn-soft" href="#felt"><i class="ico-felt" aria-hidden="true"></i>毛毡分身</a>
         </div>
       </div>
 
@@ -398,10 +398,80 @@
       </div>
     </section>
 
-    <!-- 08 报名方式 -->
-    <section class="sec sec-signup" id="signup">
+    <!-- 08 毛毡分身 -->
+    <section class="sec" id="felt">
       <div class="sec-head reveal">
         <span class="sec-no n">08</span>
+        <h2 class="d">领取你的毛毡分身</h2>
+        <span class="sec-en">FELT ME</span>
+      </div>
+
+      <div class="plush felt-card reveal">
+        <i class="seam"></i>
+        <p class="felt-lead">上传一张照片，AI 把你戳成<b>羊毛毡小人</b>，放进开发者集合页，再生成专属海报邀请朋友。</p>
+
+        <div class="felt-step" data-step="photo">
+          <div class="felt-frame" id="feltFrame" role="button" tabindex="0" aria-label="上传或更换照片">
+            <div class="felt-empty" id="feltEmpty">
+              <span class="felt-cam" aria-hidden="true"></span>
+              <b class="d">点这里上传照片</b>
+              <span>正脸清晰、光线充足<br>半身或全身都行</span>
+            </div>
+            <img class="felt-photo" id="feltPhoto" alt="" hidden>
+            <div class="felt-loading" id="feltLoading" hidden>
+              <span class="poster-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <p class="d" id="feltTip">正在挑选彩色羊毛…</p>
+              <span class="felt-bar"><i id="feltBar"></i></span>
+              <button class="chip-btn" type="button" id="feltCancel">取消</button>
+            </div>
+          </div>
+          <p class="felt-hint" id="feltHint" hidden>拖动、双指缩放，把自己放进框里 · 点照片可以换一张</p>
+          <input class="felt-input" type="file" accept="image/*" id="feltInput" tabindex="-1" aria-hidden="true">
+          <p class="felt-error" id="feltError" role="alert" hidden></p>
+          <button class="btn btn-primary btn-lg btn-block" type="button" id="feltGo"><span>生成我的毛毡形象</span></button>
+          <p class="felt-privacy">照片只用来生成形象，不会保存或公开；你点「放进集合页」后，毛毡形象才会出现在集合页。</p>
+        </div>
+
+        <div class="felt-step" data-step="result" hidden>
+          <div class="felt-stage"><img id="feltResult" alt="AI 生成的毛毡形象"></div>
+          <label class="felt-name">
+            <span class="d">昵称</span>
+            <input id="feltNick" type="text" maxlength="12" autocomplete="nickname" enterkeyhint="done" placeholder="给你的毛毡分身起个名字">
+          </label>
+          <p class="felt-error" id="feltPostError" role="alert" hidden></p>
+          <button class="btn btn-primary btn-lg btn-block" type="button" id="feltPost"><span>放进集合页</span></button>
+          <div class="cta-row">
+            <button class="btn btn-soft" type="button" id="feltRetry">重新生成</button>
+            <button class="btn btn-soft" type="button" id="feltRepick">换张照片</button>
+          </div>
+        </div>
+
+        <div class="felt-step" data-step="done" hidden>
+          <div class="felt-stage">
+            <img id="feltMine" alt="我的毛毡形象">
+            <span class="felt-no n" id="feltNo"></span>
+          </div>
+          <p class="felt-done d">已加入开发者集合页</p>
+          <p class="felt-done-sub" id="feltDoneSub"></p>
+          <button class="btn btn-primary btn-lg btn-block" type="button" data-poster><i class="ico-poster ico-poster-w" aria-hidden="true"></i><span>生成专属海报</span></button>
+          <div class="cta-row">
+            <a class="btn btn-soft" href="wall.html">去集合页看看</a>
+            <button class="btn btn-soft" type="button" id="feltAgain">重新做一个</button>
+          </div>
+          <button class="felt-remove" type="button" id="feltRemove">从集合页移除我的形象</button>
+        </div>
+      </div>
+
+      <a class="plush felt-crowd reveal" href="wall.html" id="feltCrowd" hidden>
+        <span class="felt-crowd-row" id="feltCrowdRow"></span>
+        <span class="felt-crowd-text"><b class="n" id="feltCount">0</b> 位开发者已入列<i class="arrow" aria-hidden="true"></i></span>
+      </a>
+    </section>
+
+    <!-- 09 报名方式 -->
+    <section class="sec sec-signup" id="signup">
+      <div class="sec-head reveal">
+        <span class="sec-no n">09</span>
         <h2 class="d">报名方式</h2>
         <span class="sec-en">SIGN UP</span>
       </div>
@@ -426,9 +496,9 @@
     </section>
 
     <footer class="foot">
-      <p class="foot-host">主办：<b>圆方智谷 · 卫华集团</b></p>
+      <p class="foot-host">主办：<b>圆方智谷×卫华集团</b></p>
       <p class="foot-slogan d">让每一个真实业务场景，都有AI的答案</p>
-      <p class="foot-note">企业服务AI社区 · 活动时间为拟定，最终安排以主办方通知为准</p>
+      <p class="foot-note">场景生态OPC社区 · 活动时间为拟定，最终安排以主办方通知为准</p>
     </footer>
   </main>
 
@@ -464,6 +534,7 @@
         <img class="poster-img" alt="AI入企黑客松卫华集团专场分享海报，含活动二维码" hidden>
       </div>
       <p class="poster-tip"></p>
+      <a class="poster-upsell" href="#felt" data-poster-close hidden>上传照片，生成带你毛毡形象的专属海报</a>
       <div class="poster-actions">
         <a class="btn btn-primary" id="posterSave" href="#" download="卫华AI黑客松-分享海报.jpg">保存海报</a>
         <button class="btn btn-soft" id="posterShare" type="button" hidden>分享给朋友</button>
@@ -474,7 +545,8 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="js/main.js?v=20261029-2" defer></script>
-  <script src="js/poster.js?v=20261029-2" defer></script>
+  <script src="js/main.js?v=20261030-2" defer></script>
+  <script src="js/felt.js?v=20261030-3" defer></script>
+  <script src="js/poster.js?v=20261030-2" defer></script>
 </body>
 </html>
