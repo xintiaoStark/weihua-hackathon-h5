@@ -418,61 +418,128 @@
 
   /* ---------- poster ---------- */
 
-  // The visitor's felt avatar on a cream plush card. The avatar has a white ground, so multiply
-  // drops it onto the card the same way the page's icons sit on their tiles.
-  function drawMe(ctx, me, rand) {
-    var x = 170;
-    var y = 424;
-    var w = 410;
-    var h = 424;
-    plushRect(ctx, x, y, w, h, 46, '#fffaf4', rand, { seam: 'rgba(242,102,139,.3)', shadow: 'rgba(40,90,160,.4)', blur: 34, offset: 18 });
+  // Die-cut sticker of the felt avatar: the white ground connected to the image edge is dropped,
+  // except for a white rim that follows the outline. A near-white part of the figure that touches
+  // the ground (white shoes, a white shirt) stays inside the rim, so loose cut-outs never show holes.
+  function dieCut(im, maxH, maxW) {
+    var s = Math.min(maxH / im.height, maxW / im.width);
+    var rim = 7 * SCALE;
+    var m = Math.ceil(rim) + 2;
+    var iw = Math.round(im.width * s * SCALE);
+    var ih = Math.round(im.height * s * SCALE);
+    var cw = iw + m * 2;
+    var ch = ih + m * 2;
 
-    var cx = x + w / 2;
-    var floor = y + h - 40;
-    ctx.save();
-    ctx.translate(cx, floor);
-    ctx.scale(1, 0.2);
-    var g = ctx.createRadialGradient(0, 0, 0, 0, 0, 140);
-    g.addColorStop(0, 'rgba(150,100,170,.24)');
-    g.addColorStop(1, 'rgba(150,100,170,0)');
-    ctx.fillStyle = g;
-    ctx.fillRect(-140, -140, 280, 280);
-    ctx.restore();
+    var src = document.createElement('canvas');
+    src.width = cw;
+    src.height = ch;
+    var sx = src.getContext('2d', { willReadFrequently: true });
+    sx.imageSmoothingQuality = 'high';
+    sx.drawImage(im, m, m, iw, ih);
+    var d = sx.getImageData(0, 0, cw, ch).data;
 
-    var im = me.img;
-    var s = Math.min((w - 60) / im.width, (h - 66) / im.height);
-    var dw = im.width * s;
-    var dh = im.height * s;
-    ctx.save();
-    roundRect(ctx, x + 10, y + 10, w - 20, h - 20, 36);
-    ctx.clip();
-    ctx.globalCompositeOperation = 'multiply';
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(im, cx - dw / 2, floor + 6 - dh, dw, dh);
-    ctx.restore();
+    var ground = new Uint8Array(cw * ch);
+    var q = new Int32Array(cw * ch);
+    var qh = 0;
+    var qt = 0;
+    function isGround(p) {
+      var i = p * 4;
+      if (d[i + 3] < 8) return true;
+      var lo = Math.min(d[i], d[i + 1], d[i + 2]);
+      var hi = Math.max(d[i], d[i + 1], d[i + 2]);
+      return lo >= 232 && hi - lo <= 14;
+    }
+    function push(p) {
+      if (!ground[p] && isGround(p)) {
+        ground[p] = 1;
+        q[qt++] = p;
+      }
+    }
+    var x, y, p;
+    for (x = 0; x < cw; x++) { push(x); push((ch - 1) * cw + x); }
+    for (y = 0; y < ch; y++) { push(y * cw); push(y * cw + cw - 1); }
+    while (qh < qt) {
+      p = q[qh++];
+      x = p % cw;
+      if (x > 0) push(p - 1);
+      if (x < cw - 1) push(p + 1);
+      if (p >= cw) push(p - cw);
+      if (p < cw * (ch - 1)) push(p + cw);
+    }
 
-    ctx.save();
-    ctx.translate(x + 4, y + 10);
-    ctx.rotate(-0.08);
-    pill(ctx, -22, -24, 50, 'No.' + pad3(me.no), {
-      font: '900 26px ' + NUM,
-      bg: ['#ff9e8a', '#f2668b'],
-      color: '#ffffff',
-      pad: 20,
-      shadow: 'rgba(200,60,100,.45)'
-    }, rand);
-    ctx.restore();
+    var sil = document.createElement('canvas');
+    sil.width = cw;
+    sil.height = ch;
+    var silCtx = sil.getContext('2d');
+    var shape = silCtx.createImageData(cw, ch);
+    for (p = 0; p < cw * ch; p++) {
+      if (ground[p]) continue;
+      shape.data[p * 4] = shape.data[p * 4 + 1] = shape.data[p * 4 + 2] = shape.data[p * 4 + 3] = 255;
+    }
+    silCtx.putImageData(shape, 0, 0);
+
+    var out = document.createElement('canvas');
+    out.width = cw;
+    out.height = ch;
+    var o = out.getContext('2d');
+    // grow the silhouette by stamping it around two rings
+    for (var ring = 1; ring <= 2; ring++) {
+      var r = (rim * ring) / 2;
+      var steps = ring * 16;
+      for (var a = 0; a < steps; a++) {
+        var t = (a / steps) * Math.PI * 2;
+        o.drawImage(sil, Math.cos(t) * r, Math.sin(t) * r);
+      }
+    }
+    o.drawImage(sil, 0, 0);
+    o.globalCompositeOperation = 'source-atop';
+    o.drawImage(src, 0, 0);
+    return { canvas: out, w: cw / SCALE, h: ch / SCALE, m: m / SCALE };
   }
 
-  // drawn after the cloud edge, which would otherwise cover it
-  function drawMeName(ctx, me, rand) {
-    pill(ctx, W / 2, 822, 52, me.nickname, {
-      font: '700 25px ' + BODY,
-      bg: '#ffffff',
-      align: 'center',
-      pad: 26,
-      shadow: 'rgba(90,60,150,.32)'
-    }, rand);
+  // The plush crane stands behind, a little to the right, so its face, hook and laptop stay visible.
+  function drawCraneBehind(ctx, crane) {
+    var s = 0.58;
+    ctx.drawImage(crane, 30, 240, 840, 840, 150, 406, 840 * s, 840 * s);
+  }
+
+  // drawn after the cloud edge, so the doll stands in front of it
+  function drawMeSticker(ctx, me) {
+    var cut = dieCut(me.img, 340, 300);
+    var cx = 180;
+    var bottom = 820;
+    ctx.save();
+    ctx.shadowColor = 'rgba(40,80,150,.4)';
+    ctx.shadowBlur = 26;
+    ctx.shadowOffsetY = 12;
+    ctx.drawImage(cut.canvas, cx - cut.w / 2, bottom - cut.h + cut.m, cut.w, cut.h);
+    ctx.restore();
+    return cx;
+  }
+
+  function drawMeName(ctx, me, cx, rand) {
+    var no = 'No.' + pad3(me.no);
+    var noFont = '900 24px ' + NUM;
+    var nameFont = '700 25px ' + BODY;
+    ctx.font = noFont;
+    var w1 = ctx.measureText(no).width;
+    ctx.font = nameFont;
+    var w2 = ctx.measureText(me.nickname).width;
+    var h = 52;
+    var w = 24 + w1 + 12 + w2 + 26;
+    var left = Math.max(36, Math.min(W - 36 - w, cx - w / 2));
+    var top = 806;
+    plushRect(ctx, left, top, w, h, h / 2, '#ffffff', rand, { shadow: 'rgba(90,60,150,.34)', blur: 16, offset: 8, hair: 3.4 });
+    ctx.save();
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.font = noFont;
+    ctx.fillStyle = C.berry;
+    ctx.fillText(no, left + 24, top + h / 2 + 1);
+    ctx.font = nameFont;
+    ctx.fillStyle = C.ink;
+    ctx.fillText(me.nickname, left + 24 + w1 + 12, top + h / 2 + 1);
+    ctx.restore();
   }
 
   function drawPoster(assets) {
@@ -530,7 +597,7 @@
         { t: ' 已入列开发者召集令', font: '500 26px ' + BODY }
       ], W / 2, 362, 'center');
       rich(ctx, [{ t: '两天一夜，一起把AI写进真实工业场景。', font: '500 26px ' + BODY }], W / 2, 402, 'center');
-      drawMe(ctx, assets.me, rand);
+      drawCraneBehind(ctx, assets.crane);
     } else {
       rich(ctx, [
         { t: '在', font: '500 26px ' + BODY },
@@ -556,18 +623,34 @@
       ctx.fillRect(cx - 2, cy - 1, cw + 4, 56);
     }
 
-    sticker(ctx, 122, 560, 78, '#ffe27a', -10, [
-      { t: '总奖金超', font: '700 19px ' + BODY, color: C.ink2, lh: 28 },
-      { t: '¥6万', font: '900 42px ' + NUM, color: '#ff6b6b', lh: 46 }
-    ], rand);
-    sticker(ctx, 640, 520, 62, '#ffc6d6', 9, [
-      { t: '包吃', font: '400 29px ' + DISPLAY, lh: 34 },
-      { t: '包住', font: '400 29px ' + DISPLAY, lh: 34 }
-    ], rand);
-    sticker(ctx, 634, 748, 72, '#c4f0da', -6, [
-      { t: '路费报销', font: '700 18px ' + BODY, color: C.ink2, lh: 26 },
-      { t: '¥200', font: '900 38px ' + NUM, color: '#2f9f74', lh: 42 }
-    ], rand);
+    if (assets.me) {
+      // the doll takes the left side, so the stickers line up along the right edge
+      sticker(ctx, 688, 478, 58, '#ffe27a', 10, [
+        { t: '总奖金超', font: '700 15px ' + BODY, color: C.ink2, lh: 22 },
+        { t: '¥6万', font: '900 32px ' + NUM, color: '#ff6b6b', lh: 36 }
+      ], rand);
+      sticker(ctx, 698, 628, 50, '#ffc6d6', -8, [
+        { t: '包吃', font: '400 23px ' + DISPLAY, lh: 27 },
+        { t: '包住', font: '400 23px ' + DISPLAY, lh: 27 }
+      ], rand);
+      sticker(ctx, 688, 770, 56, '#c4f0da', 6, [
+        { t: '路费报销', font: '700 14px ' + BODY, color: C.ink2, lh: 21 },
+        { t: '¥200', font: '900 29px ' + NUM, color: '#2f9f74', lh: 33 }
+      ], rand);
+    } else {
+      sticker(ctx, 122, 560, 78, '#ffe27a', -10, [
+        { t: '总奖金超', font: '700 19px ' + BODY, color: C.ink2, lh: 28 },
+        { t: '¥6万', font: '900 42px ' + NUM, color: '#ff6b6b', lh: 46 }
+      ], rand);
+      sticker(ctx, 640, 520, 62, '#ffc6d6', 9, [
+        { t: '包吃', font: '400 29px ' + DISPLAY, lh: 34 },
+        { t: '包住', font: '400 29px ' + DISPLAY, lh: 34 }
+      ], rand);
+      sticker(ctx, 634, 748, 72, '#c4f0da', -6, [
+        { t: '路费报销', font: '700 18px ' + BODY, color: C.ink2, lh: 26 },
+        { t: '¥200', font: '900 38px ' + NUM, color: '#2f9f74', lh: 42 }
+      ], rand);
+    }
 
     var bumps = [];
     for (var i = 0; i < 10; i++) {
@@ -577,7 +660,7 @@
     ctx.fillStyle = C.page;
     ctx.fillRect(0, 900, W, 14);
     blobs(ctx, bumps, C.page, rand, function (p) { return p[1] < 900; });
-    if (assets.me) drawMeName(ctx, assets.me, rand);
+    if (assets.me) drawMeName(ctx, assets.me, drawMeSticker(ctx, assets.me), rand);
 
     var bx = 36;
     var by = 884;
@@ -725,22 +808,16 @@
     var job = { key: key };
     job.promise = Promise.all([
       loadScript(QR_LIB),
-      me ? null : loadImage('assets/img/hero-crane.webp'),
+      loadImage('assets/img/hero-crane.webp'),
       loadImage('assets/img/ic-factory.webp'),
       fontsReady(),
       avatar,
       me ? wallTotal() : 0
     ]).then(function (r) {
+      // a missing avatar (removed from the gallery) falls back to the generic poster
       var withMe = me && r[4];
-      var crane = r[1];
-      if (!withMe && !crane) {
-        // the avatar went missing (removed from the gallery): fall back to the generic poster
-        return loadImage('assets/img/hero-crane.webp').then(function (im) {
-          return drawPoster({ crane: im, logo: r[2], url: shareUrl() });
-        });
-      }
       return drawPoster({
-        crane: crane,
+        crane: r[1],
         logo: r[2],
         url: shareUrl(),
         me: withMe ? { img: r[4], nickname: me.nickname, no: me.no } : null,
