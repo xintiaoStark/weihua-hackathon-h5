@@ -10,11 +10,13 @@
   <meta property="og:title" content="开发者召集令 · AI入企黑客松 卫华集团专场">
   <meta property="og:description" content="两天一夜，把AI写进真实工业场景。总奖金超6万，包吃包住，路费报销。">
   <meta property="og:image" content="assets/img/hero-crane.webp">
+  <meta property="og:url" content="https://wechat.tokenmap.com.cn/1030/">
+  <link rel="canonical" href="https://wechat.tokenmap.com.cn/1030/">
   <link rel="icon" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/favicon.png">
   <link rel="preload" href="assets/fonts/display.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/img/hero-crane.webp" as="image">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20261029-2">
   <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -42,7 +44,8 @@
       <i class="seam"></i>
       <p class="desk-qr-title d">手机扫码报名</p>
       <img src="assets/img/signup-qr.png" alt="卫华集团黑客松大赛报名二维码" width="180" height="180">
-      <a class="btn btn-primary btn-sm" href="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" target="_blank" rel="noopener" data-signup>电脑端报名</a>
+      <a class="btn btn-primary btn-sm btn-block" href="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" target="_blank" rel="noopener" data-signup>电脑端报名</a>
+      <button class="btn btn-soft btn-sm btn-block" type="button" data-poster><i class="ico-poster" aria-hidden="true"></i>生成分享海报</button>
     </div>
   </aside>
 
@@ -81,7 +84,10 @@
         <a class="btn btn-primary btn-lg" href="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" target="_blank" rel="noopener" data-signup>
           <span>立即报名</span><i class="arrow" aria-hidden="true"></i>
         </a>
-        <a class="btn btn-soft" href="#info">先看看玩法</a>
+        <div class="cta-row">
+          <a class="btn btn-soft" href="#info">先看看玩法</a>
+          <button class="btn btn-soft" type="button" data-poster><i class="ico-poster" aria-hidden="true"></i>分享海报</button>
+        </div>
       </div>
 
       <svg class="hero-cloud" viewBox="0 0 480 60" preserveAspectRatio="none" aria-hidden="true">
@@ -134,7 +140,7 @@
           <span class="tile"><img src="assets/img/ic-puzzle.webp" alt="" width="160" height="160"></span>
           <div class="info-body">
             <h3 class="d">形式</h3>
-            <p>与卫华员工<b>混编组队</b>，围绕真实业务赛题现场开发、路演</p>
+            <p>与卫华员工一起，围绕真实业务赛题现场开发、路演。</p>
           </div>
         </li>
       </ul>
@@ -411,7 +417,11 @@
         <a class="btn btn-primary btn-lg btn-block" href="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" target="_blank" rel="noopener" data-signup>
           <span>立即报名</span><i class="arrow" aria-hidden="true"></i>
         </a>
-        <button class="btn btn-soft btn-block" type="button" data-copy="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" data-toast="报名链接已复制，可粘贴到浏览器打开">复制报名链接</button>
+        <div class="cta-row">
+          <button class="btn btn-soft" type="button" data-copy="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" data-toast="报名链接已复制，可粘贴到浏览器打开">复制报名链接</button>
+          <button class="btn btn-soft" type="button" data-poster><i class="ico-poster" aria-hidden="true"></i>生成海报</button>
+        </div>
+        <p class="signup-share">邀请朋友一起来？生成海报，分享到朋友圈或群聊</p>
       </div>
     </section>
 
@@ -428,14 +438,43 @@
         <b class="d">总奖金超 ¥6万</b>
         <span>包吃包住 · 路费报销</span>
       </div>
-      <a class="btn btn-primary" href="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" target="_blank" rel="noopener" tabindex="-1" data-signup>
-        <span>立即报名</span><i class="arrow" aria-hidden="true"></i>
-      </a>
+      <div class="dock-actions">
+        <button class="dock-poster" type="button" tabindex="-1" data-poster aria-label="生成分享海报">
+          <i class="ico-poster" aria-hidden="true"></i><span>海报</span>
+        </button>
+        <a class="btn btn-primary" href="https://yuanfangs.feishu.cn/share/base/form/shrcnOpvaC4x1ngvjy9PkSWt6Gh" target="_blank" rel="noopener" tabindex="-1" data-signup>
+          <span>立即报名</span><i class="arrow" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="poster-modal" id="posterModal" role="dialog" aria-modal="true" aria-label="分享海报" hidden>
+    <div class="poster-mask" data-poster-close></div>
+    <div class="poster-sheet">
+      <div class="poster-stage">
+        <div class="poster-loading" hidden>
+          <span class="poster-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <p class="d">海报生成中…</p>
+        </div>
+        <div class="poster-error" hidden>
+          <p>海报生成失败，请检查网络后重试</p>
+          <button class="btn btn-soft btn-sm" type="button" data-poster-retry>重新生成</button>
+        </div>
+        <img class="poster-img" alt="AI入企黑客松卫华集团专场分享海报，含活动二维码" hidden>
+      </div>
+      <p class="poster-tip"></p>
+      <div class="poster-actions">
+        <a class="btn btn-primary" id="posterSave" href="#" download="卫华AI黑客松-分享海报.jpg">保存海报</a>
+        <button class="btn btn-soft" id="posterShare" type="button" hidden>分享给朋友</button>
+      </div>
+      <button class="poster-close" type="button" data-poster-close aria-label="关闭海报"></button>
     </div>
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="js/main.js" defer></script>
+  <script src="js/main.js?v=20261029-2" defer></script>
+  <script src="js/poster.js?v=20261029-2" defer></script>
 </body>
 </html>

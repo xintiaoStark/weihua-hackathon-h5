@@ -43,12 +43,12 @@
     if (!bar || !heroCta || !signup || !('IntersectionObserver' in window)) return;
     var heroVisible = true;
     var signupVisible = false;
-    var link = bar.querySelector('a');
+    var controls = bar.querySelectorAll('a, button');
     function update() {
       var show = !heroVisible && !signupVisible;
       bar.classList.toggle('show', show);
       bar.setAttribute('aria-hidden', show ? 'false' : 'true');
-      if (link) link.tabIndex = show ? 0 : -1;
+      for (var i = 0; i < controls.length; i++) controls[i].tabIndex = show ? 0 : -1;
     }
     new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
